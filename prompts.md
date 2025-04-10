@@ -1,6 +1,6 @@
 ---
 title: Prompt Engineering
-layout: home
+layout: default
 ---
 
 Welcome to my teaching blog. Here I will do my best to post most up-to-date materials for my courses and projects.
