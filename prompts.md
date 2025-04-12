@@ -1,6 +1,6 @@
 ---
 title: Prompt Engineering
-layout: default
+layout: home
 ---
 
 <<<<<<< HEAD
