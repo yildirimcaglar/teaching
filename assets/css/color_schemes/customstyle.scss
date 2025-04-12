@@ -124,6 +124,10 @@ $body-font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif !defa
 $font-size-base: 16px !default;
 $line-height-base: 1.7 !default;
 
+.footnotes {
+  font-size: 0.8em;
+  line-height: 1.4;
+}
 // Code blocks (dark mode)
 $code-background-color: #1e1e1e !default;
 $code-color: #dcdcdc !default;

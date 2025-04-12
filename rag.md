@@ -2,16 +2,24 @@
 title: Retrieval-Augmented Generation
 layout: default
 ---
-## Overview
 
-{: .note}
-This chapter provides an introductory coverage of retrieval-augmented generation and assumes that you have a background in ML and LLMs.
+# Retrieval-Augmented Generation
 
 {: .summary-title }
 > TL;DR
 >
-> You should remeber ragggg...
+> In this chapter, you’ll get a clear, no-fluff overview of Retrieval-Augmented Generation (RAG), which is a popular technique that helps language models stay smart and up-to-date by letting them "look things up" before answering. We’ll cover:
+> - What RAG is and how it works
+- Common use cases for RAG
+- Where RAG shines and where it still struggles
 
+## Table of Contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
+## Overview
 Retrieval-augmented generation (RAG) is a technique designed to overcome a key limitation of large language models (LLMs): their inability to access new or updated information after training. RAG integrates an information retrieval component with a generative language model. Instead of relying solely on the knowledge stored in a model’s parameters, a RAG system retrieves relevant external information (e.g. documents from a knowledge base) to ground the model’s output. In essence, a RAG model combines a parametric memory (the knowledge implicit in the trained weights of an LLM) with a non-parametric memory (an external database or document index) to produce responses [^1]​. This allows the model to access up-to-date, specific facts on demand, addressing limitations of traditional LLMs that have a fixed training corpus cut-off date​ [^2]. Through the incorporation of retrieved evidence into generation, RAG can ensure the output is contextually relevant and grounded in factual information, significantly enhancing accuracy and reducing hallucinations​ [^3]. In other words, the model “augments” its generative process with real-time knowledge lookup (hence the name), which improves the coherence and correctness of its answers beyond what its frozen training data provides.
 
 For AI history aficionados out there, RAG was introduced by Lewis et al. [^1] as a general solution to improve knowledge-intensive natural language processing tasks. Lewis et al. [^1] presented RAG as “a general-purpose fine-tuning recipe” for combining any pre-trained seq2seq language model with any external knowledge source via retrieval​. In their framework, a seq2seq model like BART or T5 serves as the generator (parametric memory), and a large text corpus (e.g. Wikipedia) indexed by a neural search engine serves as the external memory​. At generation time, the model retrieves and attends to text passages from the index, which allows it to inject fresh knowledge into its output. This approach achieved state-of-the-art results on several open-domain question answering benchmarks, outperforming standard LLMs that relied only on internal knowledge​. Since the publication of this paper, RAG techniques have been widely explored and extended, becoming an important pattern for building more reliable and knowledgeable AI systems.
@@ -21,8 +29,8 @@ A typical RAG architecture, as depicted in [Figure 1](#fig1), involves two main 
 
 <figure>
   <a name="fig1"></a>
-  <figcaption><b>Figure 1. A simplified RAG Architecture</b></figcaption>
   <img src="/assets/img/RAG.png" alt="RAG Architecture" width="600"/>
+  <figcaption><b>Figure 1. A simplified RAG Architecture</b></figcaption>
 </figure>
 
 When a user provides a query or prompt, the **retriever** component searches an external knowledge source (such as a document collection, a single PDF, or a company database) for documents or passages relevant to the query. For this purpose, both the query and the documents are converted into numerical representations (dense vectors) called **embeddings** using a text encoder. These embeddings capture the semantic meaning of the text, allowing the system to retrieve conceptually relevant content even when the wording doesn’t exactly match.
@@ -63,7 +71,7 @@ Unlike a traditional LLM which is limited to training data from a certain time, 
 ### 4. Provenance and Transparency: 
 Since RAG models retrieve actual source texts, they can provide citations or references for their outputs. Users (or developers) can trace an answer back to the supporting documents, increasing trust in the system. This is known as **provenance** (i.e., the ability to trace where information came from) and is a big improvement over standard LLMs, which often cannot say where they got a piece of information. In applications like question answering or report generation, a RAG system can output the answer and also list the documents (or even direct quotes) that back up that answer [^11]. Such transparency is valuable for users who need to verify information, and for developers debugging the system. It moves AI-generated content closer to an open-book exam rather than a closed-book guess. Many RAG-based QA systems (including some commercial search chatbots) will show snippets from retrieved webpages to justify the answer, which greatly enhances user confidence and trust in the response [^12].
 
-{: .important-title}
+{: .note-title}
 >RAG STRENGTHS IN A NUTSHELL
 >
 > RAG leverages the strengths of both retrieval and generation: it retains the fluency and flexibility of LLMs while anchoring them with real-world data. The result is systems that are more accurate, knowledgeable, and maintainable. These benefits make RAG an attractive design pattern for many AI applications today.
@@ -84,17 +92,33 @@ As discussed earlier, RAG reduces hallucination when the right info is retrieved
 ### 4. Maintenance of the Knowledge Index
 The last limitation is the elephant in the RAG room: having an external knowledge base introduces maintenance overhead (yet another service to worry about...). The index or database must be kept up-to-date (especially if current information is a goal), which might involve periodic re-embedding of documents or additions/deletions as the knowledge source changes [^13] [^14]. In an enterprise scenario, one has to implement pipelines for ingesting new data into the RAG system. There are also engineering concerns around consistency (ensuring the retriever’s index and the actual source data don’t go out of sync) and around scaling (making sure retrieval remains fast as the corpus grows). Moreover, if the knowledge base contains sensitive data, security and access control become important, as the system should not retrieve documents the user isn’t authorized to see. This means integrating RAG with permission checks and data governance policies, which complicates system design [^17]. All these maintenance and governance issues are new compared to a self-contained model, and they require careful consideration when deploying RAG in real products.
 
-Despite these challenges, many of them can be mitigated with clever design and engineering. For example, caching mechanisms can alleviate latency by storing embeddings of common queries or recently retrieved results, reducing the need to hit the database for every request [^13]. The dependency on retrieval quality can be addressed by continually improving the retriever (using user feedback or offline training on QA pairs) and by using hybrid retrieval to cover for weaknesses of any single method [^18]. Hallucination can be further mitigated by instructing the LLM to only use provided context (some prompt designs explicitly say “answer only with information from the context”) [^19]. System complexity can be abstracted by new frameworks (libraries like LangChain or LlamaIndex have emerged to help manage RAG pipelines, for instance).
+Despite these challenges, many of them can be mitigated with clever design and engineering. For example, caching mechanisms can alleviate latency by storing embeddings of common queries or recently retrieved results, reducing the need to hit the database for every request [^13]. The dependency on retrieval quality can be addressed by continually improving the retriever (using user feedback or offline training on QA pairs) and by using hybrid retrieval to cover for weaknesses of any single method [^18]. Hallucination can be further mitigated by instructing the LLM to only use provided context (some prompt designs explicitly say “answer only with information from the context”) [^19]. System complexity can be abstracted by new frameworks (libraries like LangChain or LlamaIndex have emerged to help manage RAG pipelines, for instance). Ongoing research in RAG is addressing many of these issues, such as learning to retrieve better, optimizing latency (e.g., via cache-augmented generation techniques that pre-store some results to reduce live retrieval cost​), and making the models more robust to imperfect retrieval. As the field matures, we can expect these limitations to be gradually reduced, making RAG an even more reliable approach for integrating knowledge into LLMs.
 
-{: .important-title}
->RAG STRENGTHS IN A NUTSHELL
+{: .note-title}
+>RAG LIMITATIONS IN A NUTSHELL
 >
-> RAG adds overhead in exchange for its benefits. It introduces more components (which can fail or need tuning) and relies on external data quality. If either the retrieval or the knowledge source is flawed, the advantage of RAG diminishes. Therefore, when building a RAG system, one must ensure the retrieval component is accurate and fast, and that the knowledge corpus is comprehensive and maintained. Ongoing research in RAG is addressing many of these issues, such as learning to retrieve better, optimizing latency (e.g., via cache-augmented generation techniques that pre-store some results to reduce live retrieval cost​), and making the models more robust to imperfect retrieval. As the field matures, we can expect these limitations to be gradually reduced, making RAG an even more reliable approach for integrating knowledge into LLMs.
+> RAG adds overhead in exchange for its benefits. It introduces more components (which can fail or need tuning) and relies on external data quality. If either the retrieval or the knowledge source is flawed, the advantage of RAG diminishes. Therefore, when building a RAG system, one must ensure the retrieval component is accurate and fast, and that the knowledge corpus is comprehensive and maintained. 
 
-```python
-def my_function(a, b):
-    return a*b
-```
+
+## Wrapping Up
+In closing, RAG brings together the best of both worlds: the fluency of large language models and the factual accuracy of search. By allowing models to retrieve relevant, real-time information before generating responses, RAG helps overcome one of the biggest limitations of LLMs—their static and outdated knowledge. Whether you’re building a chatbot, a question-answering tool, or a domain-specific assistant, RAG offers a flexible, modular way to boost performance without retraining the whole model. That said, RAG isn’t a magic fix. It comes with extra complexity, relies heavily on good retrieval, and introduces new engineering challenges. But for many use cases, the trade-offs are worth it—especially when accuracy, trust, or freshness of information matters. As RAG continues to evolve with better retrieval methods, caching strategies, and open-source tools, it’s quickly becoming a go-to design pattern in the AI toolkit. If you’re working with LLMs, now’s the time to start thinking about how retrieval could take your system from smart to truly useful.
+
+{: .note-title}
+> Key Takeaway
+>
+> RAG helps large language models give better, more accurate answers by letting them search for up-to-date info before responding. It’s like giving your LLM an open book during a test to make it smarter, faster, and way more reliable.
+
+{: .highlight-title}
+>Quick definitions
+>
+> - **Retriever:** Finds relevant documents from a knowledge base (like a smart search engine).
+- **Generator:** The language model that creates the final answer using the retrieved info.
+- **Parametric memory:** What the LLM "knows" from training (stored in its weights).
+- **Non-parametric memory:** External knowledge sources like PDFs or databases.
+- **Embedding:** A numerical representation of text that captures meaning for search.
+- **Provenance:** The ability to trace where a piece of generated information came from.
+
+
 
 ## References
 
