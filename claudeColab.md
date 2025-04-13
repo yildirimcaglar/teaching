@@ -27,27 +27,27 @@ To access Claude models, you will need to create a developer account at [Anthrop
 Once logged in, you will be presented with your dashboard. To get started, click **Get API Keys**
 <figure>
   <a name="fig1"></a>
-  <img src="/assets/img/colab_anthropic/a1.png" alt="Step 1" width="400"/>
+  <img src="/assets/img/colab-anthropic/a1.png" alt="Step 1" width="400"/>
 </figure>
 
 This will take you to the API keys page, where you can see a list of your API keys. If you already have any API keys, they will be listed in the table. To creat a new key, simply click the **Create Key** button.
 <figure>
   <a name="fig2"></a>
-  <img src="/assets/img/colab_anthropic/a2.png" alt="Step 2" width="500"/>
+  <img src="/assets/img/colab-anthropic/a2.png" alt="Step 2" width="500"/>
 </figure>
 
 This will open a pop-up window where you can give a name to your key (it's customary to use one key per project). Name your key and click the **Add** button.
 
 <figure>
   <a name="fig2"></a>
-  <img src="/assets/img/colab_anthropic/a3.png" alt="Step 3" width="400"/>
+  <img src="/assets/img/colab-anthropic/a3.png" alt="Step 3" width="400"/>
 </figure>
 
 Upon creating your API key, you will be prompted to save it. Copy the key immediately and save it in a secure text file. You won’t be able to view it again!
 
 <figure>
   <a name="fig2"></a>
-  <img src="/assets/img/colab_anthropic/a4.png" alt="Step 4" width="400"/>
+  <img src="/assets/img/colab-anthropic/a4.png" alt="Step 4" width="400"/>
 </figure>
 
 
@@ -64,20 +64,20 @@ Using secrets in Google Colab or environment variables ensures that your sensiti
 To do so, click the key icon on the left navigation menu on Colab:
 >   <figure>
         <a name="fig5"></a>
-        <img src="/assets/img/colab_anthropic/a5.png" alt="Step 5" width="500"/>
+        <img src="/assets/img/colab-anthropic/a5.png" alt="Step 5" width="500"/>
     </figure>
 
 This will bring up the Secrets window. To add a new secret, click **Add new secret**:
 
 ><figure>
 >        <a name="fig6"></a>
->        <img src="/assets/img/colab_anthropic/a6.png" alt="Step 6" width="500"/>
+>        <img src="/assets/img/colab-anthropic/a6.png" alt="Step 6" width="500"/>
 >    </figure>
 
 Then give your secret a name, specifically `my_anthropic_key`,  and paste your copied API key into the value field. You will also need to toggle on the Notebook access option, so that you can access the key via Notebook (in the next step).
 <figure>
     <a name="fig7"></a>
-    <img src="/assets/img/colab_anthropic/a7.png" alt="Step 7" width="500"/>
+    <img src="/assets/img/colab-anthropic/a7.png" alt="Step 7" width="500"/>
 </figure>
 
 ## Accessing a Secret Key in Notebook 
@@ -85,7 +85,7 @@ To access the secret key you just saved, copy the corresponding code from the Se
 
 <figure>
     <a name="fig8"></a>
-    <img src="/assets/img/colab_anthropic/a8.png" alt="Step 8" width="500"/>
+    <img src="/assets/img/colab-anthropic/a8.png" alt="Step 8" width="500"/>
 </figure>
 
 {: .important}
@@ -102,7 +102,7 @@ Now that you have access to your API key. You can go ahead and start working wit
 This will install the module and should run without any issues on Colab.
 <figure>
     <a name="fig9"></a>
-    <img src="/assets/img/colab_anthropic/a9.png" alt="Step 9" width="400"/>
+    <img src="/assets/img/colab-anthropic/a9.png" alt="Step 9" width="400"/>
 </figure>
 
 
