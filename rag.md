@@ -29,7 +29,7 @@ A typical RAG architecture, as depicted in [Figure 1](#fig1), involves two main 
 
 <figure>
   <a name="fig1"></a>
-  <img src="/assets/img/RAG.png" alt="RAG Architecture" width="600"/>
+  <img src="./assets/img/RAG.png" alt="RAG Architecture" width="600"/>
   <figcaption><b>Figure 1. A simplified RAG Architecture</b></figcaption>
 </figure>
 
