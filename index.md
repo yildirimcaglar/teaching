@@ -7,3 +7,5 @@ Welcome to my teaching blog focused on the fundamentals of LLMs. Here I will do 
 
 If you see something interesting, keep on reading...
 
+Professor Yildirim
+
